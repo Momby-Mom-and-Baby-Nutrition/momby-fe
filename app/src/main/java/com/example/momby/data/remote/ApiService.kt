@@ -1,10 +1,13 @@
-package com.example.momby.data
+package com.example.momby.data.remote
 
-import retrofit2.Response
+import com.example.momby.data.model.request.OptimizeMenuRequest
+import com.example.momby.data.model.response.OptimizeMenuResponse
+import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
-
     @POST("/optimize-menu")
-    suspend fun getMenu(): Response<>
+    suspend fun getMenu(
+        @Body request: OptimizeMenuRequest
+    ): OptimizeMenuResponse
 }

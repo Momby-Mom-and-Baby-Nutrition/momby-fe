@@ -1,4 +1,10 @@
 package com.example.momby.data.model
 
-class KebutuhanNutrisi {
-}
+import com.google.gson.annotations.SerializedName
+
+data class KebutuhanNutrisi(
+    @SerializedName("Karbohidrat_gram") val karbohidrat: Double,
+    @SerializedName("Lemak_gram") val lemak: Double,
+    @SerializedName("Protein_gram") val protein: Double,
+    @SerializedName("TEE_kalori") val teeKalori: Double
+)

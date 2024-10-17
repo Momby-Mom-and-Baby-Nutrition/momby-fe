@@ -12,12 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.momby.model.MenuMakan
+import com.example.momby.data.model.DetailMakanan
+import com.example.momby.data.model.MenuOptimized
 import com.example.momby.ui.theme.DarkGrey
 
 @Composable
 fun MenuMakanItem(
-    menu:MenuMakan,
+    menu:String,
+    isDone:Boolean,
+    tipe:String,
     onCheckedChange:(Boolean)->Unit
 ){
     Box {
@@ -27,14 +30,14 @@ fun MenuMakanItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(text = menu.nama, style = MaterialTheme.typography.bodyLarge)
+                    Text(text = menu, style = MaterialTheme.typography.bodyLarge)
                     Text(
-                        text = menu.desc,
+                        text = tipe,
                         style = MaterialTheme.typography.bodyMedium,
                         color = DarkGrey
                     )
                 }
-                RoundCheckbox(isChecked = menu.isDone, onCheckedChange = onCheckedChange)
+                RoundCheckbox(isChecked = isDone, onCheckedChange = onCheckedChange)
             }
             Divider(
                 modifier = Modifier.fillMaxWidth(),

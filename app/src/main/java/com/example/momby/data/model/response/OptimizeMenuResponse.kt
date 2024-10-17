@@ -1,6 +1,8 @@
-package com.example.momby.data.model
+package com.example.momby.data.model.response
 
-import com.google.gson.annotations.SerializedName
+import com.example.momby.data.model.KebutuhanNutrisi
+import com.example.momby.data.model.MenuOptimized
+import com.example.momby.data.model.NutrisiMenu
 
 data class OptimizeMenuResponse(
     val best_fit: Double,

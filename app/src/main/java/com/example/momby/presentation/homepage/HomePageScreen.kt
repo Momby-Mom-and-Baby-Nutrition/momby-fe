@@ -72,7 +72,6 @@ fun HomePageScreen(
         )
     }
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()

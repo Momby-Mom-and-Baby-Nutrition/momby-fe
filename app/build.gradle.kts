@@ -83,7 +83,6 @@ dependencies {
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.6")
 
-
     //Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")
@@ -92,6 +91,13 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
+    // Room dependencies
+    implementation("androidx.room:room-runtime:2.3.0")
+    kapt("androidx.room:room-compiler:2.5.1")
+
+    // Room Coroutines support
+    implementation("androidx.room:room-ktx:2.5.1")
 
     implementation("androidx.compose.material3:material3:1.1.0")
     implementation("androidx.compose.material3:material3-window-size-class:1.3.0")

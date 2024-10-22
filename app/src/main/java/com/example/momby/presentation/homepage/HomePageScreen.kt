@@ -19,6 +19,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -70,6 +71,12 @@ fun HomePageScreen(
                 navController.navigate("profile_edit")
             }
         )
+    }
+
+    LaunchedEffect(menu.value) {
+        if (menu.value!=null){
+            viewModel.updateMenuData(menu.value!!)
+        }
     }
 
     Column(

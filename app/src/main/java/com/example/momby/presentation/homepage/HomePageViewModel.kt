@@ -4,6 +4,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.momby.data.dao.HistoryDao
+import com.example.momby.data.entity.HistoryEntity
 import com.example.momby.data.model.KebutuhanNutrisi
 import com.example.momby.data.model.MenuOptimized
 import com.example.momby.data.model.NutrisiMenu
@@ -17,13 +19,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class HomePageViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val db:FirebaseFirestore,
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val historyDao: HistoryDao
 ):ViewModel() {
 
     private val _userState = MutableStateFlow<User?>(null)
@@ -40,9 +45,25 @@ class HomePageViewModel @Inject constructor(
     private val _nutritionMenu = MutableStateFlow<NutrisiMenu?>(null)
     var nutritionMenu: StateFlow<NutrisiMenu?> = _nutritionMenu
 
+    private var _history = mutableStateOf<HistoryEntity?>(null)
+
+
     init {
         fetchUserData()
+        fetchMenu()
+
+        if (_menu!=null){
+            viewModelScope.launch {
+                menu.collect { newMenu ->
+                    newMenu?.let {
+                        updateMenuData(it)
+                    }
+                }
+            }
+        }
     }
+
+
 
     private fun fetchUserData(){
         val currentUID = auth.currentUser?.uid
@@ -63,6 +84,70 @@ class HomePageViewModel @Inject constructor(
         }
     }
 
+    fun fetchMenu(){
+        viewModelScope.launch {
+            try {
+                val calendar = Calendar.getInstance()
+                calendar.time = Date()
+                calendar.set(Calendar.HOUR_OF_DAY, 0)
+                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
+
+                val curDate = calendar.time
+
+                val history = historyDao.getHistoryByDate(curDate.time)
+                _history.value = history
+                _menu.value = history.menuOptimized
+
+
+            }catch (e:Exception){
+                println("Error fetching history: " + e)
+            }
+        }
+    }
+
+    fun insertHistory() {
+        viewModelScope.launch {
+            try {
+                val calendar = Calendar.getInstance()
+                calendar.time = Date()
+                calendar.set(Calendar.HOUR_OF_DAY, 0)
+                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
+
+                val curDate = calendar.time
+
+
+                val menuOptimized = _menu.value ?: throw IllegalStateException("MenuOptimized cannot be null")
+                val nutrisiMenu = _nutritionMenu.value ?: throw IllegalStateException("NutrisiMenu cannot be null")
+
+                val historyEntity = HistoryEntity(
+                    description = "Optimasi Menu untuk tanggal: ${curDate}",
+                    date = curDate.time,
+                    menuOptimized = menuOptimized,
+                    nutrisiMenu = nutrisiMenu
+                )
+                historyDao.insertOrUpdateHistory(historyEntity)
+            } catch (e: Exception) {
+                println("Error inserting history: ${e.message}")
+            }
+        }
+    }
+
+    fun updateMenuData(menu:MenuOptimized){
+        _history.value?.let { historyEntity ->
+            val updateHistoryEntity = historyEntity.copy(menuOptimized = menu)
+            viewModelScope.launch {
+                try {
+                    historyDao.insertOrUpdateHistory(updateHistoryEntity)
+                } catch (e: Exception) {
+                    println("Error updating history: ${e.message}")
+                }
+            }
+        }
+    }
 
     private fun CheckData(){
         if (_userState.value?.age == 0 && _userState.value?.age == 0){
@@ -104,13 +189,8 @@ class HomePageViewModel @Inject constructor(
                 }
 
                 _nutritionMenu.value = _responseData.value?.nutritional_get
+                insertHistory()
 
-                println("Response Data: ${_responseData.value}")
-                println("Makanan Pokok Pagi: " + _menu.value?.MakanPagi?.makananPokok)
-                println("Sumber Hewani Pagi: " + _menu.value?.MakanPagi?.sumberHewani)
-                println("Sumber Nabati Pagi: " + _menu.value?.MakanPagi?.sumberNabati)
-                println("Sayuran Pagi: " + _menu.value?.MakanPagi?.sayuran)
-                println("Pelengkap Pagi: " + _menu.value?.MakanPagi?.pelengkap)
             }catch (e:Exception){
                 println("Error bro: " + e)
             }

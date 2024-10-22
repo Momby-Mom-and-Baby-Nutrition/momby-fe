@@ -5,6 +5,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.room.Room
+import com.example.momby.data.HistoryDatabase
+import com.example.momby.data.dao.HistoryDao
 import com.example.momby.data.remote.ApiService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -68,4 +71,22 @@ object MainModule {
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDatabase(
+        @ApplicationContext context: Context
+    ):HistoryDatabase{
+        return Room.databaseBuilder(
+            context,
+            HistoryDatabase::class.java,
+            "history_database"
+        ).allowMainThreadQueries().build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideHistoryDao(database: HistoryDatabase):HistoryDao{
+        return database.historyDao()
+    }
 }

@@ -14,5 +14,6 @@ data class User(
     var calorieNeeds: Int? = 0,
     var carbNeeds: Int? = 0,
     var fatNeeds: Int? = 0,
-    var proteinNeeds: Int? = 0
+    var proteinNeeds: Int? = 0,
+    var activityLevel:Int? = 0
 )

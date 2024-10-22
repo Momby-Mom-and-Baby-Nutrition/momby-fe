@@ -79,6 +79,11 @@ fun ProfileEditScreen(navController: NavController) {
     var gestatAge by remember {
         mutableStateOf(user.value?.gestatAge.toString())
     }
+
+    var activityLevel by remember{
+        mutableStateOf(4)
+    }
+
     var isCheckedYes by remember {
         mutableStateOf(false)
     }
@@ -120,7 +125,8 @@ fun ProfileEditScreen(navController: NavController) {
                         weightAfter = weightAfter.toDouble(),
                         height = height.toDouble(),
                         age = age.toInt(),
-                        gestatAge = gestatAge.toInt()
+                        gestatAge = gestatAge.toInt(),
+                        activityLevel = activityLevel
                     )
                     updateUser?.let { viewModel.updateUserData(it) }
 
@@ -323,6 +329,9 @@ fun ProfileEditScreen(navController: NavController) {
             }
 
             6 -> {
+                activityLevel = 4
+                isCheckedYes = false
+                isCheckedNo = false
                 Row {
                     Icon(
                         modifier = Modifier.clickable { currentStep-- },
@@ -342,7 +351,7 @@ fun ProfileEditScreen(navController: NavController) {
 
 
                 Text(
-                    text = "Harap masukkan usia kehamilan anda saat ini.\n" +
+                    text = "Harap masukkan usia kehamilan anda saat ini.\n" +
                             "contoh: jika usia kehamilan anda 2 bulan, isikan 8 minggu.",
                     style = MaterialTheme.typography.bodyLarge,
                     color = DarkPink,
@@ -377,7 +386,12 @@ fun ProfileEditScreen(navController: NavController) {
 
 
                 Text(
-                    text = "Saya suka berolahraga dengan aktivitas fisik: jalan cepat, lari, senam aerobik, mendaki, menari, karate, bermain bola besar, berenang, bersepeda (>16 km/jam)",
+                    text = when (activityLevel) {
+                        4 -> "Saya suka berolahraga dengan aktivitas fisik: jalan cepat, lari, senam aerobik, mendaki, menari, karate, bermain bola besar, berenang, bersepeda (>16 km/jam)"
+                        3 -> "Saya suka berolahraga dengan aktivitas fisik: bersepeda (8-16 km/jam), yoga, senam, latihan beban"
+                        2 -> "Saya suka berolahraga dengan aktivitas fisik: jalan biasa, peregangan, olahraga ringan, melakukan pekerjaan rumah tangga"
+                        else -> "Saya suka berolahraga dengan aktivitas fisik: jalan biasa, peregangan, olahraga ringan, melakukan pekerjaan rumah tangga"
+                    },
                     style = MaterialTheme.typography.bodyLarge,
                     color = DarkPink,
                     textAlign = TextAlign.Justify,
@@ -387,8 +401,12 @@ fun ProfileEditScreen(navController: NavController) {
                     Checkbox(
                         checked = isCheckedYes,
                         onCheckedChange = {
+                            if(activityLevel == 1){
+                                activityLevel++
+                            }
                             isCheckedYes = it
                             if (it) isCheckedNo = false
+                            println("Nilai Activity Level: " + activityLevel)
                         },
                         colors = CheckboxDefaults.colors(
                             checkedColor = DarkPink,
@@ -404,8 +422,16 @@ fun ProfileEditScreen(navController: NavController) {
                     Checkbox(
                         checked = isCheckedNo,
                         onCheckedChange = {
-                            isCheckedNo = it
+                            if(activityLevel == 4 || activityLevel == 3){
+                                activityLevel -= 1
+                                isCheckedNo = false
+                            }
+                            else if(activityLevel == 2){
+                                isCheckedNo = it
+                                activityLevel -= 1
+                            }
                             if (it) isCheckedYes = false
+                            println("Nilai Activity Level: " + activityLevel)
                         },
                         colors = CheckboxDefaults.colors(
                             checkedColor = DarkPink,

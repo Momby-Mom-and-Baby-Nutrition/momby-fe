@@ -49,7 +49,7 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun provideBaseURL(): String = "https://mombymenu-421701149600.us-central1.run.app"
+    fun provideBaseURL(): String = "https://mombymenu2-421701149600.us-central1.run.app"
 
 
     @Provides

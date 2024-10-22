@@ -13,9 +13,9 @@ interface HistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrUpdateHistory(historyEntity: HistoryEntity)
 
-    @Query("SELECT * FROM history ORDER BY date ASC")
-    fun getAllHistory(): Flow<List<HistoryEntity>>
+    @Query("SELECT * FROM history WHERE userId = :userId ORDER BY date ASC")
+    fun getAllHistoryByUid(userId: String): Flow<List<HistoryEntity>>
 
-    @Query("SELECT * FROM history WHERE date = :specificDate ORDER BY date ASC")
-    fun getHistoryByDate(specificDate: Long): HistoryEntity
+    @Query("SELECT * FROM history WHERE date = :specificDate AND userId = :userId ORDER BY date ASC")
+    fun getHistoryByDateAndUid(specificDate: Long, userId: String): HistoryEntity
 }

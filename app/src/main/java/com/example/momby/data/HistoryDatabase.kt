@@ -10,7 +10,7 @@ import com.example.momby.data.converter.NutrisiMenuConverter
 import com.example.momby.data.dao.HistoryDao
 import com.example.momby.data.entity.HistoryEntity
 
-@Database(entities = [HistoryEntity::class], version = 1, exportSchema = false)
+@Database(entities = [HistoryEntity::class], version = 2)
 @TypeConverters(
     DateConverter::class,
     MenuOptimizedConverter::class,

@@ -10,15 +10,17 @@ import com.example.momby.data.converter.NutrisiMenuConverter
 import com.example.momby.data.model.MenuOptimized
 import com.example.momby.data.model.NutrisiMenu
 
-@Entity(tableName = "history")
+@Entity(tableName = "history",indices = [Index(value = ["userId", "date"], unique = true)])
 @TypeConverters(
     NutrisiMenuConverter::class,
     DateConverter::class,
     MenuOptimizedConverter::class
 )
 data class HistoryEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val userId: String,
     @TypeConverters(DateConverter::class)
-    @PrimaryKey val date: Long,
+    val date: Long,
     val description: String,
 
 

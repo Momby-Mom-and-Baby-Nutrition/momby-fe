@@ -81,7 +81,7 @@ object MainModule {
             context,
             HistoryDatabase::class.java,
             "history_database"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
     }
 
     @Provides

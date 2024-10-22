@@ -3,19 +3,12 @@ package com.example.momby.data.model
 import com.google.gson.annotations.SerializedName
 
 data class DetailMakanan(
-    @SerializedName("Makanan Pokok") val makananPokok: String,
-    var makananPokokIsDone:Boolean = false,
+    @SerializedName("Makanan1") val makanan1: String,
+    var makanan1IsDone:Boolean = false,
 
-    @SerializedName("Pelengkap") val pelengkap: String,
-    var pelengkapIsDone:Boolean = false,
+    @SerializedName("Makanan2") val makanan2: String,
+    var makanan2IsDone:Boolean = false,
 
-    @SerializedName("Sayuran") val sayuran: String,
-    var sayuranIsDone:Boolean = false,
-
-    @SerializedName("Sumber Hewani") val sumberHewani: String,
-    var sumberHewaniIsDone:Boolean = false,
-
-    @SerializedName("Sumber Nabati") val sumberNabati: String,
-    var sumberNabatiIsDone:Boolean = false,
-
+    @SerializedName("Makanan3") val makanan3: String,
+    var makanan3IsDone:Boolean = false,
     )

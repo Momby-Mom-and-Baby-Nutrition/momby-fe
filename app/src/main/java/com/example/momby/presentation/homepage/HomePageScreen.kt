@@ -219,192 +219,147 @@ fun HomePageScreen(
                 ) {
                     //makan pertama
                     BoxJamMakan(jam = "Sarapan")
-                    MenuMakanItem(
-                        menu = menu.value?.MakanPagi!!.makananPokok,
-                        isDone = menu.value?.MakanPagi?.makananPokokIsDone!!,
-                        tipe = "Makanan Pokok",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanPagi =
-                                menu.value?.MakanPagi?.copy(makananPokokIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanPagi = updateMakanPagi!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
-                    MenuMakanItem(
-                        menu = menu.value?.MakanPagi!!.sumberHewani,
-                        isDone = menu.value?.MakanPagi?.sumberHewaniIsDone!!,
-                        tipe = "Sumber Hewani",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanPagi =
-                                menu.value?.MakanPagi?.copy(sumberHewaniIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanPagi = updateMakanPagi!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
-
-                    MenuMakanItem(
-                        menu = menu.value?.MakanPagi!!.sumberNabati,
-                        isDone = menu.value?.MakanPagi?.sumberNabatiIsDone!!,
-                        tipe = "Sumber Nabati",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanPagi =
-                                menu.value?.MakanPagi?.copy(sumberNabatiIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanPagi = updateMakanPagi!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
-
-                    MenuMakanItem(
-                        menu = menu.value?.MakanPagi!!.sayuran,
-                        isDone = menu.value?.MakanPagi?.sayuranIsDone!!,
-                        tipe = "Sayuran",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanPagi =
-                                menu.value?.MakanPagi?.copy(sayuranIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanPagi = updateMakanPagi!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
-                    MenuMakanItem(
-                        menu = menu.value?.MakanPagi!!.pelengkap,
-                        isDone = menu.value?.MakanPagi?.pelengkapIsDone!!,
-                        tipe = "Pelengkap",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanPagi =
-                                menu.value?.MakanPagi?.copy(pelengkapIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanPagi = updateMakanPagi!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
+                    if (menu.value?.MakanPagi?.makanan1 != "Kosong"){
+                        MenuMakanItem(
+                            menu = menu.value?.MakanPagi!!.makanan1,
+                            isDone = menu.value?.MakanPagi?.makanan1IsDone!!,
+                            tipe = "Makanan Pokok",
+                            onCheckedChange = { isChecked ->
+                                val updateMakanPagi =
+                                    menu.value?.MakanPagi?.copy(makanan1IsDone = isChecked)
+                                val updateMenu = menu.value?.copy(MakanPagi = updateMakanPagi!!)
+                                viewModel.updateMenu(updateMenu!!)
+                            })
+                    }
+                    if (menu.value?.MakanPagi?.makanan2 != "Kosong"){
+                        MenuMakanItem(
+                            menu = menu.value?.MakanPagi!!.makanan2,
+                            isDone = menu.value?.MakanPagi?.makanan2IsDone!!,
+                            tipe = "Sumber Hewani",
+                            onCheckedChange = { isChecked ->
+                                val updateMakanPagi =
+                                    menu.value?.MakanPagi?.copy(makanan2IsDone = isChecked)
+                                val updateMenu = menu.value?.copy(MakanPagi = updateMakanPagi!!)
+                                viewModel.updateMenu(updateMenu!!)
+                            })
+                    }
+                    if (menu.value?.MakanPagi?.makanan3 != "Kosong"){
+                        MenuMakanItem(
+                            menu = menu.value?.MakanPagi!!.makanan3,
+                            isDone = menu.value?.MakanPagi?.makanan3IsDone!!,
+                            tipe = "Sumber Nabati",
+                            onCheckedChange = { isChecked ->
+                                val updateMakanPagi =
+                                    menu.value?.MakanPagi?.copy(makanan3IsDone = isChecked)
+                                val updateMenu = menu.value?.copy(MakanPagi = updateMakanPagi!!)
+                                viewModel.updateMenu(updateMenu!!)
+                            })
+                    }
 
                     //makan kedua
                     BoxJamMakan(jam = "Snack Pagi")
                     MenuMakanItem(
-                        menu = menu.value?.SnackPagi?.pelengkap!!,
-                        isDone = menu.value?.SnackPagi?.pelengkapIsDone!!,
+                        menu = menu.value?.SnackPagi?.snack!!,
+                        isDone = menu.value?.SnackPagi?.snackIsDone!!,
                         tipe = "Snack",
                         onCheckedChange = { isChecked ->
                             val updateSnackPagi =
-                                menu.value?.SnackPagi?.copy(pelengkapIsDone = isChecked)
+                                menu.value?.SnackPagi?.copy(snackIsDone = isChecked)
                             val updateMenu = menu.value?.copy(SnackPagi = updateSnackPagi!!)
                             viewModel.updateMenu(updateMenu!!)
                         })
+
                     //makan ketiga
                     BoxJamMakan(jam = "Makan Siang")
-                    MenuMakanItem(
-                        menu = menu.value?.MakanSiang!!.makananPokok,
-                        isDone = menu.value?.MakanSiang?.makananPokokIsDone!!,
-                        tipe = "Makanan Pokok",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanSiang =
-                                menu.value?.MakanSiang?.copy(makananPokokIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanSiang = updateMakanSiang!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
-                    MenuMakanItem(
-                        menu = menu.value?.MakanSiang!!.sumberHewani,
-                        isDone = menu.value?.MakanSiang?.sumberHewaniIsDone!!,
-                        tipe = "Sumber Hewani",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanSiang =
-                                menu.value?.MakanSiang?.copy(sumberHewaniIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanSiang = updateMakanSiang!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
+                    if (menu.value?.MakanSiang?.makanan1 != "Kosong"){
+                        MenuMakanItem(
+                            menu = menu.value?.MakanSiang!!.makanan1,
+                            isDone = menu.value?.MakanSiang?.makanan1IsDone!!,
+                            tipe = "Makanan Pokok",
+                            onCheckedChange = { isChecked ->
+                                val updateMakanSiang =
+                                    menu.value?.MakanSiang?.copy(makanan1IsDone = isChecked)
+                                val updateMenu = menu.value?.copy(MakanSiang = updateMakanSiang!!)
+                                viewModel.updateMenu(updateMenu!!)
+                            })
+                    }
+                    if (menu.value?.MakanSiang?.makanan2 != "Kosong"){
+                        MenuMakanItem(
+                            menu = menu.value?.MakanSiang!!.makanan2,
+                            isDone = menu.value?.MakanSiang?.makanan2IsDone!!,
+                            tipe = "Sumber Hewani",
+                            onCheckedChange = { isChecked ->
+                                val updateMakanSiang =
+                                    menu.value?.MakanSiang?.copy(makanan2IsDone = isChecked)
+                                val updateMenu = menu.value?.copy(MakanSiang = updateMakanSiang!!)
+                                viewModel.updateMenu(updateMenu!!)
+                            })
+                    }
+                    if (menu.value?.MakanSiang?.makanan3 != "Kosong"){
+                        MenuMakanItem(
+                            menu = menu.value?.MakanSiang!!.makanan3,
+                            isDone = menu.value?.MakanSiang?.makanan3IsDone!!,
+                            tipe = "Sumber Nabati",
+                            onCheckedChange = { isChecked ->
+                                val updateMakanSiang =
+                                    menu.value?.MakanSiang?.copy(makanan3IsDone = isChecked)
+                                val updateMenu = menu.value?.copy(MakanSiang = updateMakanSiang!!)
+                                viewModel.updateMenu(updateMenu!!)
+                            })
+                    }
 
-                    MenuMakanItem(
-                        menu = menu.value?.MakanSiang!!.sumberNabati,
-                        isDone = menu.value?.MakanSiang?.sumberNabatiIsDone!!,
-                        tipe = "Sumber Nabati",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanPagi =
-                                menu.value?.MakanSiang?.copy(sumberNabatiIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanSiang = updateMakanPagi!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
 
-                    MenuMakanItem(
-                        menu = menu.value?.MakanSiang!!.sayuran,
-                        isDone = menu.value?.MakanSiang?.sayuranIsDone!!,
-                        tipe = "Sayuran",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanSiang =
-                                menu.value?.MakanSiang?.copy(sayuranIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanSiang = updateMakanSiang!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
-                    MenuMakanItem(
-                        menu = menu.value?.MakanSiang!!.pelengkap,
-                        isDone = menu.value?.MakanSiang?.pelengkapIsDone!!,
-                        tipe = "Pelengkap",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanSiang =
-                                menu.value?.MakanSiang?.copy(pelengkapIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanSiang = updateMakanSiang!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
                     //makan keempat
                     BoxJamMakan(jam = "Snack Sore")
                     MenuMakanItem(
-                        menu = menu.value?.SnackSore?.pelengkap!!,
-                        isDone = menu.value?.SnackSore?.pelengkapIsDone!!,
+                        menu = menu.value?.SnackSore?.snack!!,
+                        isDone = menu.value?.SnackSore?.snackIsDone!!,
                         tipe = "Snack",
                         onCheckedChange = { isChecked ->
                             val updateSnackSore =
-                                menu.value?.SnackSore?.copy(pelengkapIsDone = isChecked)
+                                menu.value?.SnackSore?.copy(snackIsDone = isChecked)
                             val updateMenu = menu.value?.copy(SnackSore = updateSnackSore!!)
                             viewModel.updateMenu(updateMenu!!)
                         })
 
                     //makan kelimaa
                     BoxJamMakan(jam = "Makan Malam")
-                    MenuMakanItem(
-                        menu = menu.value?.MakanMalam!!.makananPokok,
-                        isDone = menu.value?.MakanMalam?.makananPokokIsDone!!,
-                        tipe = "Makanan Pokok",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanMalam =
-                                menu.value?.MakanMalam?.copy(makananPokokIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanMalam = updateMakanMalam!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
-                    MenuMakanItem(
-                        menu = menu.value?.MakanMalam!!.sumberHewani,
-                        isDone = menu.value?.MakanMalam?.sumberHewaniIsDone!!,
-                        tipe = "Sumber Hewani",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanMalam =
-                                menu.value?.MakanMalam?.copy(sumberHewaniIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanMalam = updateMakanMalam!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
-
-                    MenuMakanItem(
-                        menu = menu.value?.MakanMalam!!.sumberNabati,
-                        isDone = menu.value?.MakanMalam?.sumberNabatiIsDone!!,
-                        tipe = "Sumber Nabati",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanMalam =
-                                menu.value?.MakanMalam?.copy(sumberNabatiIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanMalam = updateMakanMalam!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
-
-                    MenuMakanItem(
-                        menu = menu.value?.MakanMalam!!.sayuran,
-                        isDone = menu.value?.MakanMalam?.sayuranIsDone!!,
-                        tipe = "Sayuran",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanMalam =
-                                menu.value?.MakanMalam?.copy(sayuranIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanMalam = updateMakanMalam!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
-                    MenuMakanItem(
-                        menu = menu.value?.MakanMalam!!.pelengkap,
-                        isDone = menu.value?.MakanMalam?.pelengkapIsDone!!,
-                        tipe = "Pelengkap",
-                        onCheckedChange = { isChecked ->
-                            val updateMakanMalam =
-                                menu.value?.MakanMalam?.copy(pelengkapIsDone = isChecked)
-                            val updateMenu = menu.value?.copy(MakanMalam = updateMakanMalam!!)
-                            viewModel.updateMenu(updateMenu!!)
-                        })
+                    if (menu.value?.MakanMalam?.makanan1 != "Kosong"){
+                        MenuMakanItem(
+                            menu = menu.value?.MakanMalam!!.makanan1,
+                            isDone = menu.value?.MakanMalam?.makanan1IsDone!!,
+                            tipe = "Makanan Pokok",
+                            onCheckedChange = { isChecked ->
+                                val updateMakanMalam =
+                                    menu.value?.MakanMalam?.copy(makanan1IsDone = isChecked)
+                                val updateMenu = menu.value?.copy(MakanMalam = updateMakanMalam!!)
+                                viewModel.updateMenu(updateMenu!!)
+                            })
+                    }
+                    if (menu.value?.MakanMalam?.makanan2 != "Kosong"){
+                        MenuMakanItem(
+                            menu = menu.value?.MakanMalam!!.makanan2,
+                            isDone = menu.value?.MakanMalam?.makanan2IsDone!!,
+                            tipe = "Sumber Hewani",
+                            onCheckedChange = { isChecked ->
+                                val updateMakanMalam =
+                                    menu.value?.MakanMalam?.copy(makanan2IsDone = isChecked)
+                                val updateMenu = menu.value?.copy(MakanMalam = updateMakanMalam!!)
+                                viewModel.updateMenu(updateMenu!!)
+                            })
+                    }
+                    if (menu.value?.MakanMalam?.makanan3 != "Kosong"){
+                        MenuMakanItem(
+                            menu = menu.value?.MakanMalam!!.makanan3,
+                            isDone = menu.value?.MakanMalam?.makanan3IsDone!!,
+                            tipe = "Sumber Nabati",
+                            onCheckedChange = { isChecked ->
+                                val updateMakanMalam =
+                                    menu.value?.MakanMalam?.copy(makanan3IsDone = isChecked)
+                                val updateMenu = menu.value?.copy(MakanMalam = updateMakanMalam!!)
+                                viewModel.updateMenu(updateMenu!!)
+                            })
+                    }
                 }
             }
 
@@ -445,8 +400,8 @@ fun HomePageScreen(
                     height = user.value?.height?.toFloat()!!,
                     weight = user.value?.weightAfter?.toFloat()!!,
                     age = user.value?.age!!,
-                    activity = 2,
-                    gestation = user.value?.gestatAge!!
+                    activity = user.value?.activityLevel!!,
+                    gestation = user.value?.gestatAge!!,
                 )
                 viewModel.getMenu(request)
             }

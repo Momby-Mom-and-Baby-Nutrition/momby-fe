@@ -99,6 +99,7 @@ class HomePageViewModel @Inject constructor(
                 val history = historyDao.getHistoryByDate(curDate.time)
                 _history.value = history
                 _menu.value = history.menuOptimized
+                _nutritionMenu.value = history.nutrisiMenu
 
 
             }catch (e:Exception){

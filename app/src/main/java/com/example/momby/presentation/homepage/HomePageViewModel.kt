@@ -123,7 +123,7 @@ class HomePageViewModel @Inject constructor(
 
                 //HAPUS UNTUK TESTING
                 val tommorowCalendar = calendar
-                tommorowCalendar.add(Calendar.DAY_OF_YEAR, 1)
+                tommorowCalendar.add(Calendar.DAY_OF_YEAR, 2)
                 val tommorowDate = tommorowCalendar.time
 
 

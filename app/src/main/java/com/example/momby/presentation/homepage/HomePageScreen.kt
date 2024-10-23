@@ -235,7 +235,7 @@ fun HomePageScreen(
                         MenuMakanItem(
                             menu = menu.value?.MakanPagi!!.makanan2,
                             isDone = menu.value?.MakanPagi?.makanan2IsDone!!,
-                            tipe = "Sumber Hewani",
+                            tipe = "Makanan Pokok",
                             onCheckedChange = { isChecked ->
                                 val updateMakanPagi =
                                     menu.value?.MakanPagi?.copy(makanan2IsDone = isChecked)
@@ -247,7 +247,7 @@ fun HomePageScreen(
                         MenuMakanItem(
                             menu = menu.value?.MakanPagi!!.makanan3,
                             isDone = menu.value?.MakanPagi?.makanan3IsDone!!,
-                            tipe = "Sumber Nabati",
+                            tipe = "Makanan Pokok",
                             onCheckedChange = { isChecked ->
                                 val updateMakanPagi =
                                     menu.value?.MakanPagi?.copy(makanan3IsDone = isChecked)
@@ -287,7 +287,7 @@ fun HomePageScreen(
                         MenuMakanItem(
                             menu = menu.value?.MakanSiang!!.makanan2,
                             isDone = menu.value?.MakanSiang?.makanan2IsDone!!,
-                            tipe = "Sumber Hewani",
+                            tipe = "Makanan Pokok",
                             onCheckedChange = { isChecked ->
                                 val updateMakanSiang =
                                     menu.value?.MakanSiang?.copy(makanan2IsDone = isChecked)
@@ -299,7 +299,7 @@ fun HomePageScreen(
                         MenuMakanItem(
                             menu = menu.value?.MakanSiang!!.makanan3,
                             isDone = menu.value?.MakanSiang?.makanan3IsDone!!,
-                            tipe = "Sumber Nabati",
+                            tipe = "Makanan Pokok",
                             onCheckedChange = { isChecked ->
                                 val updateMakanSiang =
                                     menu.value?.MakanSiang?.copy(makanan3IsDone = isChecked)
@@ -340,7 +340,7 @@ fun HomePageScreen(
                         MenuMakanItem(
                             menu = menu.value?.MakanMalam!!.makanan2,
                             isDone = menu.value?.MakanMalam?.makanan2IsDone!!,
-                            tipe = "Sumber Hewani",
+                            tipe = "Makanan Pokok",
                             onCheckedChange = { isChecked ->
                                 val updateMakanMalam =
                                     menu.value?.MakanMalam?.copy(makanan2IsDone = isChecked)
@@ -352,7 +352,7 @@ fun HomePageScreen(
                         MenuMakanItem(
                             menu = menu.value?.MakanMalam!!.makanan3,
                             isDone = menu.value?.MakanMalam?.makanan3IsDone!!,
-                            tipe = "Sumber Nabati",
+                            tipe = "Makanan Pokok",
                             onCheckedChange = { isChecked ->
                                 val updateMakanMalam =
                                     menu.value?.MakanMalam?.copy(makanan3IsDone = isChecked)

@@ -27,6 +27,12 @@ class HistoryViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading
 
+    private val _historyIndex = MutableStateFlow<Int>(0)
+    val historyIndex: StateFlow<Int> = _historyIndex
+
+    private val _currentHistory = MutableStateFlow<History?>(null)
+    val currentHistory: StateFlow<History?> = _currentHistory
+
     init {
         fetchHistory()
 
@@ -54,11 +60,16 @@ class HistoryViewModel @Inject constructor(
                         val updateHistoryList = historyEntity.map {
                             History(
                                 menuOptimized = it.menuOptimized,
-                                date = Date(it.date)
+                                date = Date(it.date),
+                                nutrisiMenu = it.nutrisiMenu
                             )
                         }
                         _historyList.value = updateHistoryList
+                        _historyIndex.value = _historyList.value.size - 1
+                        _currentHistory.value = _historyList.value[_historyIndex.value]
                         println("BERHASIL FETCH MENU")
+                        println("History Index: ${_historyIndex.value}")
+                        println("Current History: ${_currentHistory.value}")
                         checkMenuList()
                         if (_historyList.value != null){
                             _isLoading.value = false
@@ -80,6 +91,16 @@ class HistoryViewModel @Inject constructor(
     fun formatDate(date: Date?): String {
         val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")) // Format: 25 Oktober 2024
         return date?.let { dateFormat.format(it) } ?: "Tanggal tidak tersedia"
+    }
+
+    fun nextHistory(){
+        _historyIndex.value++
+        _currentHistory.value = _historyList.value[_historyIndex.value]
+    }
+
+    fun prevHistory(){
+        _historyIndex.value--
+        _currentHistory.value = _historyList.value[_historyIndex.value]
     }
 
 }

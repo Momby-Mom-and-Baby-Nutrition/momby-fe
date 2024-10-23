@@ -50,7 +50,7 @@ class HomePageViewModel @Inject constructor(
 
     init {
         fetchUserData()
-        //fetchMenu()
+        fetchMenu()
 
         if (_menu!=null){
             viewModelScope.launch {
@@ -121,10 +121,6 @@ class HomePageViewModel @Inject constructor(
 
                 val curDate = calendar.time
 
-                //HAPUS UNTUK TESTING
-                val tommorowCalendar = calendar
-                tommorowCalendar.add(Calendar.DAY_OF_YEAR, 2)
-                val tommorowDate = tommorowCalendar.time
 
 
                 val menuOptimized = _menu.value ?: throw IllegalStateException("MenuOptimized cannot be null")
@@ -133,8 +129,8 @@ class HomePageViewModel @Inject constructor(
                 val currentUID = auth.currentUser?.uid
 
                 val historyEntity = HistoryEntity(
-                    description = "Optimasi Menu untuk tanggal: ${tommorowDate}",
-                    date = tommorowDate.time,
+                    description = "Optimasi Menu untuk tanggal: ${curDate}",
+                    date = curDate.time,
                     menuOptimized = menuOptimized,
                     nutrisiMenu = nutrisiMenu,
                     userId = currentUID.toString()

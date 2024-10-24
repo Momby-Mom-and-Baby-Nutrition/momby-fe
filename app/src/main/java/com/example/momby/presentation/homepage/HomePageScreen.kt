@@ -127,7 +127,7 @@ fun HomePageScreen(
                         ) {
                             AsyncImage(
                                 modifier = Modifier.size(120.dp).clip(CircleShape),
-                                model = R.drawable.profile_grey,
+                                model = if(user.value?.profilePictureUrl != "")user.value?.profilePictureUrl else R.drawable.profile_grey,
                                 contentDescription = "Profile Icon Grey"
                             )
                             Spacer(modifier = Modifier.height(8.dp))

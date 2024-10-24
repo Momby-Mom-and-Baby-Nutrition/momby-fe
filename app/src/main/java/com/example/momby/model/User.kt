@@ -4,7 +4,7 @@ import java.util.Date
 
 data class User(
     var name: String? = "",
-    var profilePict: String? = "",
+    var profilePictureUrl: String? = "",
     var weightBefore: Double? = 0.0,
     var weightAfter: Double? = 0.0,
     var height: Double? = 0.0,

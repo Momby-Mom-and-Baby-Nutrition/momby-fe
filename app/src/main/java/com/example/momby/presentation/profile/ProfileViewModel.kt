@@ -1,6 +1,10 @@
 package com.example.momby.presentation.profile
 
+import android.app.AlertDialog
+import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Environment
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -13,10 +17,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -62,40 +70,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun uploadProfilePicture(imageUri: Uri) {
-        val currentUID = auth.currentUser?.uid
-        if (currentUID != null) {
-            val storageRef: StorageReference = storage.reference.child("profile_pictures/$currentUID.jpg")
-
-            storageRef.putFile(imageUri)
-                .addOnSuccessListener { taskSnapshot ->
-                    storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                        saveProfilePictureUrl(downloadUri.toString())
-                    }.addOnFailureListener { e ->
-                        println("Gagal mendapatkan URL: ${e.message}")
-                    }
-                }.addOnFailureListener { e ->
-                    println("Upload foto gagal: ${e.message}")
-                }
-        } else {
-            println("UID Kosong")
-        }
-    }
-
-    private fun saveProfilePictureUrl(url: String) {
-        val currentUID = auth.currentUser?.uid
-        if (currentUID != null) {
-            db.collection("users").document(currentUID)
-                .update("profilePictureUrl", url)
-                .addOnSuccessListener {
-                    println("URL foto profil berhasil diperbarui")
-                }.addOnFailureListener { e ->
-                    println("Gagal memperbarui URL foto profil: ${e.message}")
-                }
-        }
-    }
-
-
     suspend fun removeUID(){
         dataStore.edit {
             it.remove(UID)
@@ -108,4 +82,48 @@ class ProfileViewModel @Inject constructor(
             removeUID()
         }
     }
+
+    fun uploadImage(uri: Uri) {
+        val storageRef = FirebaseStorage.getInstance().reference
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val profilePicRef = storageRef.child("profile_pictures/$userId.jpg")
+
+        profilePicRef.putFile(uri).addOnSuccessListener {
+            profilePicRef.downloadUrl.addOnSuccessListener { downloadUrl ->
+                saveProfilePictureUrl(downloadUrl.toString())
+                getUserData()
+            }
+        }.addOnFailureListener { exception ->
+            println("Gagal mengupload gambar: ${exception.message}")
+        }
+    }
+
+    private fun saveProfilePictureUrl(url: String) {
+        val currentUID = auth.currentUser?.uid
+        if (currentUID != null) {
+            db.collection("users").document(currentUID)
+                .update("profilePictureUrl", url)
+                .addOnSuccessListener {
+                    println("URL foto profil berhasil diperbarui")
+                }
+                .addOnFailureListener { e ->
+                    println("Gagal memperbarui URL foto profil: ${e.message}")
+                }
+        }
+    }
+
+    fun saveBitmapToFile(context: Context, bitmap: Bitmap): Uri? {
+        val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "profile_picture_${System.currentTimeMillis()}.jpg")
+        return try {
+            FileOutputStream(file).use { outputStream ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream) // Simpan bitmap sebagai JPEG
+            }
+            Uri.fromFile(file)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+
 }

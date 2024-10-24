@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,6 +51,7 @@ import com.example.momby.ui.theme.DarkPink
 import com.example.momby.ui.theme.DisablePink
 import com.example.momby.ui.theme.LightPink
 import com.example.momby.ui.theme.poppinsFontFamily
+import kotlinx.coroutines.delay
 
 @Composable
 fun RegisterScreen(navController: NavController) {
@@ -96,8 +98,12 @@ fun RegisterScreen(navController: NavController) {
             }
             is RegisterState.Success -> {
                 Text("Success: ${(registerState as RegisterState.Success).message}")
-                // Navigate to personal data screen or login screen after successful registration
-                navController.navigate("personal_data")
+                LaunchedEffect(Unit) {
+                    delay(1500)
+                    // Navigate to personal data screen or login screen after successful registration
+                    navController.navigate("personal_data")
+                }
+
             }
             is RegisterState.Error -> {
                 Text("Error: ${(registerState as RegisterState.Error).error}")

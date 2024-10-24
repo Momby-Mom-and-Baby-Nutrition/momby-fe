@@ -62,7 +62,7 @@ fun ProfileScreen(
                 .align(Alignment.BottomCenter)
                 .clip(CircleShape)
                 .clickable {
-                    //ganti fotonya
+                    //Going to Camera or Galeri and crop 1:1
                 }
             ) {
                 Box(modifier = Modifier.size(42.dp), contentAlignment = Alignment.Center) {

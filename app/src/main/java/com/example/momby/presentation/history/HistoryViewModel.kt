@@ -24,6 +24,9 @@ class HistoryViewModel @Inject constructor(
     private val _historyList = MutableStateFlow<List<History?>>(emptyList())
     val historyList: StateFlow<List<History?>> = _historyList
 
+    private val _isHistoryEmpty = MutableStateFlow<Boolean>(true)
+    val isHistoryEmpty:StateFlow<Boolean> = _isHistoryEmpty
+
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading
 
@@ -73,6 +76,7 @@ class HistoryViewModel @Inject constructor(
                         checkMenuList()
                         if (_historyList.value != null){
                             _isLoading.value = false
+                            _isHistoryEmpty.value = false
                         }
                     }
                 } else {

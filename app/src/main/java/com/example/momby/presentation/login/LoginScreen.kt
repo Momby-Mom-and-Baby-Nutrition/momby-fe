@@ -48,6 +48,7 @@ import com.example.momby.component.HintTextField
 import com.example.momby.ui.theme.DarkGrey
 import com.example.momby.ui.theme.DarkPink
 import com.example.momby.ui.theme.DisablePink
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -89,10 +90,14 @@ fun LoginScreen(
                 ) {
                     CircularProgressIndicator(modifier = Modifier.size(64.dp))
                 }
+
             }
 
             is LoginState.Succes -> {
-                navController.navigate("beranda")
+                LaunchedEffect(Unit) {
+                    delay(1500)
+                    navController.navigate("beranda")
+                }
             }
 
             is LoginState.Error -> {

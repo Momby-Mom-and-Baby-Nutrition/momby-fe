@@ -99,6 +99,13 @@ dependencies {
     // Room Coroutines support
     implementation("androidx.room:room-ktx:2.5.1")
 
+    //Image Cropper
+    implementation("com.github.droidninja:android-image-cropper:2.8.0")
+
+    //Firestore Storage
+    implementation("com.google.firebase:firebase-storage-ktx:19.1.0")
+
+    
     implementation("androidx.compose.material3:material3:1.1.0")
     implementation("androidx.compose.material3:material3-window-size-class:1.3.0")
     implementation("androidx.compose.material3:material3-adaptive-navigation-suite:1.3.0")

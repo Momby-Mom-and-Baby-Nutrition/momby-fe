@@ -45,27 +45,30 @@ class HomePageViewModel @Inject constructor(
     private val _nutritionMenu = MutableStateFlow<NutrisiMenu?>(null)
     var nutritionMenu: StateFlow<NutrisiMenu?> = _nutritionMenu
 
+    private val _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     private var _history = mutableStateOf<HistoryEntity?>(null)
 
 
     init {
         fetchUserData()
-        fetchMenu()
-
-        if (_menu!=null){
-            viewModelScope.launch {
-                menu.collect { newMenu ->
-                    newMenu?.let {
-                        updateMenuData(it)
-                    }
-                }
-            }
-        }
+//        if (_menu!=null){
+//            viewModelScope.launch {
+//                menu.collect { newMenu ->
+//                    newMenu?.let {
+//                        updateMenuData(it)
+//                    }
+//                }
+//            }
+//        }
     }
 
 
 
     private fun fetchUserData(){
+        _isLoading.value = true
+        fetchMenu()
         val currentUID = auth.currentUser?.uid
         if (currentUID !=null){
             db.collection("users").document(currentUID).get()
@@ -77,9 +80,11 @@ class HomePageViewModel @Inject constructor(
                         _userState.value = null
                     }
                     CheckData()
+                    _isLoading.value = false
                 }
                 .addOnFailureListener{
                     _userState.value = null
+                    _isLoading.value = false
                 }
         }
     }
@@ -179,6 +184,7 @@ class HomePageViewModel @Inject constructor(
     }
     fun getMenu(request:OptimizeMenuRequest){
         viewModelScope.launch {
+            _isLoading.value = true
             try {
                 _responseData.value = apiService.getMenu(request)
                 _menu.value = _responseData.value?.menu_optimized
@@ -196,9 +202,11 @@ class HomePageViewModel @Inject constructor(
 
                 _nutritionMenu.value = _responseData.value?.nutritional_get
                 insertHistory()
+                _isLoading.value = false
 
             }catch (e:Exception){
                 println("Error bro: " + e)
+                _isLoading.value = false
             }
         }
     }

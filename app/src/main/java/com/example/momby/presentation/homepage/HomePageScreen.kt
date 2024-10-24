@@ -10,11 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -43,6 +47,7 @@ import com.example.momby.component.MenuMakanItem
 import com.example.momby.component.NoMenuCard
 import com.example.momby.component.NutritionalIndicators
 import com.example.momby.data.model.request.OptimizeMenuRequest
+import com.example.momby.ui.theme.DarkGrey
 import com.example.momby.ui.theme.DarkPink
 import com.example.momby.ui.theme.LightPink
 
@@ -55,16 +60,10 @@ fun HomePageScreen(
 
     val user = viewModel.userState.collectAsState()
     val isDataEmpty = viewModel.isDataEmpty.collectAsState()
-    var isShowAlert by remember {
-        mutableStateOf(false)
-    }
     var menu = viewModel.menu.collectAsState()
     var nutritionMenu = viewModel.nutritionMenu.collectAsState()
-    println("isDataEmpty: " + isDataEmpty.value)
-
+    var isLoading = viewModel.isLoading.collectAsState()
     if (isDataEmpty.value) {
-        println("isShowAlert: " + isShowAlert)
-
         CustomAlertDialog(
             onDismissRequest = {},
             onConfirmClick = {
@@ -74,17 +73,19 @@ fun HomePageScreen(
     }
 
     LaunchedEffect(menu.value) {
-        if (menu.value!=null){
+        if (menu.value != null) {
             viewModel.updateMenuData(menu.value!!)
         }
     }
 
+    //Loading Screen
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp)
             .verticalScroll(rememberScrollState())
     ) {
+
         ElevatedCard(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(8.dp)
@@ -125,6 +126,7 @@ fun HomePageScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             AsyncImage(
+                                modifier = Modifier.size(120.dp).clip(CircleShape),
                                 model = R.drawable.profile_grey,
                                 contentDescription = "Profile Icon Grey"
                             )
@@ -219,7 +221,7 @@ fun HomePageScreen(
                 ) {
                     //makan pertama
                     BoxJamMakan(jam = "Sarapan")
-                    if (menu.value?.MakanPagi?.makanan1 != "Kosong"){
+                    if (menu.value?.MakanPagi?.makanan1 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanPagi!!.makanan1,
                             isDone = menu.value?.MakanPagi?.makanan1IsDone!!,
@@ -231,7 +233,7 @@ fun HomePageScreen(
                                 viewModel.updateMenu(updateMenu!!)
                             })
                     }
-                    if (menu.value?.MakanPagi?.makanan2 != "Kosong"){
+                    if (menu.value?.MakanPagi?.makanan2 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanPagi!!.makanan2,
                             isDone = menu.value?.MakanPagi?.makanan2IsDone!!,
@@ -243,7 +245,7 @@ fun HomePageScreen(
                                 viewModel.updateMenu(updateMenu!!)
                             })
                     }
-                    if (menu.value?.MakanPagi?.makanan3 != "Kosong"){
+                    if (menu.value?.MakanPagi?.makanan3 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanPagi!!.makanan3,
                             isDone = menu.value?.MakanPagi?.makanan3IsDone!!,
@@ -271,7 +273,7 @@ fun HomePageScreen(
 
                     //makan ketiga
                     BoxJamMakan(jam = "Makan Siang")
-                    if (menu.value?.MakanSiang?.makanan1 != "Kosong"){
+                    if (menu.value?.MakanSiang?.makanan1 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanSiang!!.makanan1,
                             isDone = menu.value?.MakanSiang?.makanan1IsDone!!,
@@ -283,7 +285,7 @@ fun HomePageScreen(
                                 viewModel.updateMenu(updateMenu!!)
                             })
                     }
-                    if (menu.value?.MakanSiang?.makanan2 != "Kosong"){
+                    if (menu.value?.MakanSiang?.makanan2 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanSiang!!.makanan2,
                             isDone = menu.value?.MakanSiang?.makanan2IsDone!!,
@@ -295,7 +297,7 @@ fun HomePageScreen(
                                 viewModel.updateMenu(updateMenu!!)
                             })
                     }
-                    if (menu.value?.MakanSiang?.makanan3 != "Kosong"){
+                    if (menu.value?.MakanSiang?.makanan3 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanSiang!!.makanan3,
                             isDone = menu.value?.MakanSiang?.makanan3IsDone!!,
@@ -324,7 +326,7 @@ fun HomePageScreen(
 
                     //makan kelimaa
                     BoxJamMakan(jam = "Makan Malam")
-                    if (menu.value?.MakanMalam?.makanan1 != "Kosong"){
+                    if (menu.value?.MakanMalam?.makanan1 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanMalam!!.makanan1,
                             isDone = menu.value?.MakanMalam?.makanan1IsDone!!,
@@ -336,7 +338,7 @@ fun HomePageScreen(
                                 viewModel.updateMenu(updateMenu!!)
                             })
                     }
-                    if (menu.value?.MakanMalam?.makanan2 != "Kosong"){
+                    if (menu.value?.MakanMalam?.makanan2 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanMalam!!.makanan2,
                             isDone = menu.value?.MakanMalam?.makanan2IsDone!!,
@@ -348,7 +350,7 @@ fun HomePageScreen(
                                 viewModel.updateMenu(updateMenu!!)
                             })
                     }
-                    if (menu.value?.MakanMalam?.makanan3 != "Kosong"){
+                    if (menu.value?.MakanMalam?.makanan3 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanMalam!!.makanan3,
                             isDone = menu.value?.MakanMalam?.makanan3IsDone!!,
@@ -372,7 +374,7 @@ fun HomePageScreen(
             )
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = "Kalori\t\t\t\t\t\t: " + nutritionMenu.value?.teeKalori?.toInt()+ " kalori",
+                text = "Kalori\t\t\t\t\t\t: " + nutritionMenu.value?.teeKalori?.toInt() + " kalori",
                 style = MaterialTheme.typography.bodyMedium,
                 color = DarkPink
             )
@@ -405,6 +407,19 @@ fun HomePageScreen(
                 )
                 viewModel.getMenu(request)
             }
+        }
+    }
+    if (isLoading.value){
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(DarkGrey.copy(0.4f)),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(64.dp),
+                color = DarkPink
+            )
         }
     }
 }

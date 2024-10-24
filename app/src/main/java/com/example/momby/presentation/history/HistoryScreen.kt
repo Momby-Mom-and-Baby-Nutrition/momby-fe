@@ -56,7 +56,7 @@ fun History(navController: NavController) {
     val isLoading = viewModel.isLoading.collectAsState()
     val historyIndex = viewModel.historyIndex.collectAsState()
     val currentHistory = viewModel.currentHistory.collectAsState()
-
+    val isHistoryEmpty = viewModel.isHistoryEmpty.collectAsState()
 
 
 
@@ -91,7 +91,7 @@ fun History(navController: NavController) {
     }
     //JIKA HISTORY TIDAK KOSONG
 
-    if (currentHistory != null){
+    if (historyList.value.isNotEmpty()){
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -291,4 +291,5 @@ fun History(navController: NavController) {
 
         }
     }
+
 }

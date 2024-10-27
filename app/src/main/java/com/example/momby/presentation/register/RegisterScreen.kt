@@ -1,6 +1,10 @@
 package com.example.momby.presentation.register
 
 
+import android.app.Activity
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -91,6 +95,16 @@ fun RegisterScreen(navController: NavController) {
 
     val viewModel = hiltViewModel<RegisterViewModel>()
     val registerState by viewModel.registerState.collectAsState()
+    val signUpLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                println("Nilai dari result data: " + result.data)
+                viewModel.handleSignUpResult(data)
+            } else{
+                println("Nilai dari result data: KOSONG" )
+            }
+        }
     Box(modifier = Modifier.fillMaxSize()){
         when (registerState) {
             is RegisterState.Loading -> {
@@ -272,7 +286,10 @@ fun RegisterScreen(navController: NavController) {
                 .fillMaxWidth()
                 .height(60.dp),
             border = BorderStroke(2.dp, DarkPink),
-            onClick = { /*TODO*/ }) {
+            onClick = {
+                val signUpIntent = viewModel.getSignUpIntent()
+                signUpLauncher.launch(signUpIntent)
+            }) {
             AsyncImage(
                 modifier = Modifier.size(24.dp),
                 model = R.drawable.google_logo,

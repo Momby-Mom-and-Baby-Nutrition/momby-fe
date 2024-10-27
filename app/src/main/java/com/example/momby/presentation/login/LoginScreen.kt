@@ -1,6 +1,10 @@
 package com.example.momby.presentation.login
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -81,6 +85,18 @@ fun LoginScreen(
     var isStayLogin = viewModel.isStayLogin.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
+    val signInLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                println("Nilai dari result data: " + result.data)
+                viewModel.handleSignInResult(data)
+            } else{
+                println("Nilai dari result data: KOSONG" )
+            }
+        }
+
+
     Box(modifier = Modifier.fillMaxSize()) {
         when (loginState) {
             is LoginState.Loading -> {
@@ -94,9 +110,9 @@ fun LoginScreen(
 
             }
 
-            is LoginState.Succes -> {
+            is LoginState.Success -> {
                 LaunchedEffect(Unit) {
-                    delay(1500)
+                    delay(2500)
                     navController.navigate("beranda")
                 }
             }
@@ -230,7 +246,11 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .height(60.dp),
             border = BorderStroke(2.dp, DarkPink),
-            onClick = { /*TODO*/ }) {
+            onClick = {
+                val signInIntent = viewModel.getSignInIntent()
+                signInLauncher.launch(signInIntent)
+
+            }) {
             AsyncImage(
                 modifier = Modifier.size(24.dp),
                 model = R.drawable.google_logo,
@@ -238,7 +258,7 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = "Register with Google",
+                text = "Login with Google",
                 style = MaterialTheme.typography.titleSmall,
                 color = DarkPink
             )

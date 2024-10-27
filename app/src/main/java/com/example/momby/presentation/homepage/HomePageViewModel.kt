@@ -164,6 +164,8 @@ class HomePageViewModel @Inject constructor(
         if (_userState.value?.age == 0 && _userState.value?.age == 0){
             println("Kondisi CheckData: 1")
             _isDataEmpty.value = true
+        } else if (_userState.value == null){
+            _isDataEmpty.value = true
         } else{
             _isDataEmpty.value = false
             println("Kondisi CheckData: 2")

@@ -1,10 +1,14 @@
 package com.example.momby.presentation.register
 
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.momby.model.User
-import com.example.momby.presentation.login.LoginState
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val auth: FirebaseAuth,
-    private val db:FirebaseFirestore
+    private val db:FirebaseFirestore,
+    private val googleSignInClient: GoogleSignInClient
 ):ViewModel() {
 
     private val _registerState = MutableStateFlow<RegisterState>(RegisterState.Idle)
@@ -61,6 +66,39 @@ class RegisterViewModel @Inject constructor(
 
     fun resetRegisterState(){
         _registerState.value = RegisterState.Idle
+    }
+
+    fun handleSignUpResult(data: Intent?) {
+        _registerState.value = RegisterState.Loading
+        if (data == null) {
+            _registerState.value = RegisterState.Error("Sign-Up cancelled")
+            return
+        }
+
+        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            if (account != null) {
+                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                auth.signInWithCredential(credential)
+                    .addOnCompleteListener { signInTask ->
+                        if (signInTask.isSuccessful) {
+                            _registerState.value = RegisterState.Success("Registrasi Berhasil!")
+                            println("Task Berhasil")
+
+                        } else {
+                            println("Task Gagal")
+                            _registerState.value = RegisterState.Error("Register With Google Failed: ${signInTask.exception?.localizedMessage}")
+                        }
+                    }
+            }
+        } catch (e: ApiException) {
+            println("Catch API EXCEPTION")
+            _registerState.value = RegisterState.Error("Register With Google Failed: ${e.localizedMessage}")
+        }
+    }
+    fun getSignUpIntent(): Intent {
+        return googleSignInClient.signInIntent
     }
 
 }

@@ -12,6 +12,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.momby.model.User
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -31,7 +32,8 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>,
     private val auth: FirebaseAuth,
-    private val db: FirebaseFirestore
+    private val db: FirebaseFirestore,
+    private val googleSignInClient: GoogleSignInClient
 ) : ViewModel() {
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
 
@@ -78,6 +80,10 @@ class ProfileViewModel @Inject constructor(
 
     fun logout(){
         auth.signOut()
+        googleSignInClient.signOut().addOnCompleteListener {
+            googleSignInClient.revokeAccess().addOnCompleteListener {
+            }
+        }
         viewModelScope.launch {
             removeUID()
         }

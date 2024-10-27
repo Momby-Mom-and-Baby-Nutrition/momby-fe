@@ -103,6 +103,11 @@ dependencies {
     //Ucrop
     implementation("com.github.yalantis:ucrop:2.2.8")
 
+    //Google SignIn Options
+    implementation("com.google.firebase:firebase-bom:32.1.0")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
     implementation("androidx.compose.material3:material3:1.1.0")
     implementation("androidx.compose.material3:material3-window-size-class:1.3.0")
     implementation("androidx.compose.material3:material3-adaptive-navigation-suite:1.3.0")

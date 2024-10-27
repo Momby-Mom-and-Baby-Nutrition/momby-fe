@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -46,6 +47,7 @@ import com.example.momby.R
 import com.example.momby.component.CustomReactiveButton
 import com.example.momby.component.HintPasswordField
 import com.example.momby.component.HintTextField
+import com.example.momby.presentation.login.LoginState
 import com.example.momby.ui.theme.DarkGrey
 import com.example.momby.ui.theme.DarkPink
 import com.example.momby.ui.theme.DisablePink
@@ -97,16 +99,44 @@ fun RegisterScreen(navController: NavController) {
                 }
             }
             is RegisterState.Success -> {
-                Text("Success: ${(registerState as RegisterState.Success).message}")
+                AlertDialog(
+                    onDismissRequest = { },
+                    confirmButton = {
+                    },
+                    title = {
+                        Text(text = "Success")
+                    },
+                    text = {
+                        Text(text = "Berhasil melakukan pendaftaran. Mohon Tunggu Sebentar!")
+                    }
+                )
                 LaunchedEffect(Unit) {
-                    delay(1500)
-                    // Navigate to personal data screen or login screen after successful registration
+                    delay(2000)
                     navController.navigate("personal_data")
                 }
 
             }
             is RegisterState.Error -> {
-                Text("Error: ${(registerState as RegisterState.Error).error}")
+                val errorMessage = (registerState as RegisterState.Error).error
+                AlertDialog(
+                    onDismissRequest = { },
+                    confirmButton = {
+                        Button(
+                            onClick = { viewModel.resetRegisterState() },
+                            colors = ButtonDefaults.buttonColors(
+                                DarkPink
+                            )
+                        ) {
+                            Text("OK")
+                        }
+                    },
+                    title = {
+                        Text(text = "Error")
+                    },
+                    text = {
+                        Text(text = errorMessage ?: "Unknown error occurred.")
+                    }
+                )
             }
             else -> { //
             }

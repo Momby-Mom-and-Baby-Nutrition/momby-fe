@@ -82,10 +82,10 @@ fun HomePageScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp)
+            .padding(horizontal = 24.dp)
             .verticalScroll(rememberScrollState())
     ) {
-
+        Spacer(modifier = Modifier.height(24.dp))
         ElevatedCard(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(8.dp)
@@ -126,7 +126,9 @@ fun HomePageScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             AsyncImage(
-                                modifier = Modifier.size(120.dp).clip(CircleShape),
+                                modifier = Modifier
+                                    .size(120.dp)
+                                    .clip(CircleShape),
                                 model = if(user.value?.profilePictureUrl != "")user.value?.profilePictureUrl else R.drawable.profile_grey,
                                 contentDescription = "Profile Icon Grey"
                             )
@@ -408,6 +410,8 @@ fun HomePageScreen(
                 viewModel.getMenu(request)
             }
         }
+
+        Spacer(modifier = Modifier.height(24.dp))
     }
     if (isLoading.value){
         Box(

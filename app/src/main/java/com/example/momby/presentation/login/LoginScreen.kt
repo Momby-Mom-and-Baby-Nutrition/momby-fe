@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -102,6 +103,25 @@ fun LoginScreen(
 
             is LoginState.Error -> {
                 val errorMessage = (loginState as LoginState.Error).message
+                AlertDialog(
+                    onDismissRequest = { },
+                    confirmButton = {
+                        Button(
+                            onClick = { viewModel.resetLoginState() },
+                            colors = ButtonDefaults.buttonColors(
+                                DarkPink
+                            )
+                        ) {
+                            Text("OK")
+                        }
+                    },
+                    title = {
+                        Text(text = "Error")
+                    },
+                    text = {
+                        Text(text = errorMessage ?: "Unknown error occurred.")
+                    }
+                )
             }
 
             else -> {
@@ -175,7 +195,7 @@ fun LoginScreen(
             )
             Text(
                 modifier = Modifier.clickable {
-                                              navController.navigate("forgot_password")
+                    navController.navigate("forgot_password")
                 },
                 text = "Forgot password?",
                 style = MaterialTheme.typography.bodyMedium,
@@ -188,7 +208,7 @@ fun LoginScreen(
 
         CustomReactiveButton(modifier = Modifier, onClick = {
             viewModel.loginWithEmail(email, password)
-            if (isStayLogin.value){
+            if (isStayLogin.value) {
                 coroutineScope.launch {
                     viewModel.saveUID()
                 }

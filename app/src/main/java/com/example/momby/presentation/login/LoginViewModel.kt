@@ -53,6 +53,10 @@ class LoginViewModel @Inject constructor(
         _isStayLogin.value = stayLogin
     }
 
+    fun resetLoginState(){
+        _loginState.value = LoginState.Idle
+    }
+
 }
 
 sealed class LoginState{

@@ -3,6 +3,7 @@ package com.example.momby.presentation.register
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.momby.model.User
+import com.example.momby.presentation.login.LoginState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,6 +57,10 @@ class RegisterViewModel @Inject constructor(
                     }
             }
         }
+    }
+
+    fun resetRegisterState(){
+        _registerState.value = RegisterState.Idle
     }
 
 }

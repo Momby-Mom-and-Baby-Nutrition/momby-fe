@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -150,7 +151,7 @@ fun History(navController: NavController) {
                         .padding(16.dp)
                 ) {
                     //makan pertama
-                    BoxJamMakan(jam = "Sarapan")
+                    BoxJamMakan(jam = "Sarapan", ic = painterResource(id = R.drawable.ic_morning))
                     if (currentHistory.value?.menuOptimized?.MakanPagi?.makanan1 != "Kosong") {
                         MenuMakanItem(
                             menu = currentHistory.value?.menuOptimized?.MakanPagi!!.makanan1,
@@ -178,7 +179,7 @@ fun History(navController: NavController) {
                     }
 
                     //makan kedua
-                    BoxJamMakan(jam = "Snack Pagi")
+                    BoxJamMakan(jam = "Snack Pagi",ic = painterResource(id = R.drawable.ic_snack))
                     MenuMakanItem(
                         menu = currentHistory.value?.menuOptimized?.SnackPagi?.snack!!,
                         isDone = currentHistory.value?.menuOptimized?.SnackPagi?.snackIsDone!!,
@@ -188,7 +189,7 @@ fun History(navController: NavController) {
                         })
 
                     //makan ketiga
-                    BoxJamMakan(jam = "Makan Siang")
+                    BoxJamMakan(jam = "Makan Siang",ic = painterResource(id = R.drawable.ic_afternoon))
                     if (currentHistory.value?.menuOptimized?.MakanSiang?.makanan1 != "Kosong") {
                         MenuMakanItem(
                             menu = currentHistory.value?.menuOptimized?.MakanSiang!!.makanan1,
@@ -218,7 +219,7 @@ fun History(navController: NavController) {
 
 
                     //makan keempat
-                    BoxJamMakan(jam = "Snack Sore")
+                    BoxJamMakan(jam = "Snack Sore",ic = painterResource(id = R.drawable.ic_snack))
                     MenuMakanItem(
                         menu = currentHistory.value?.menuOptimized?.SnackSore?.snack!!,
                         isDone = currentHistory.value?.menuOptimized?.SnackSore?.snackIsDone!!,
@@ -228,7 +229,7 @@ fun History(navController: NavController) {
                         })
 
                     //makan kelimaa
-                    BoxJamMakan(jam = "Makan Malam")
+                    BoxJamMakan(jam = "Makan Malam",ic = painterResource(id = R.drawable.ic_night))
                     if (currentHistory.value?.menuOptimized?.MakanMalam?.makanan1 != "Kosong") {
                         MenuMakanItem(
                             menu = currentHistory.value?.menuOptimized?.MakanMalam!!.makanan1,

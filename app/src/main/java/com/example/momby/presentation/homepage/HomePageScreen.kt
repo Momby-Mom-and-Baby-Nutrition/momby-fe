@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -222,7 +223,7 @@ fun HomePageScreen(
                         .padding(16.dp)
                 ) {
                     //makan pertama
-                    BoxJamMakan(jam = "Sarapan")
+                    BoxJamMakan(jam = "Sarapan", ic = painterResource(id = R.drawable.ic_morning))
                     if (menu.value?.MakanPagi?.makanan1 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanPagi!!.makanan1,
@@ -261,7 +262,7 @@ fun HomePageScreen(
                     }
 
                     //makan kedua
-                    BoxJamMakan(jam = "Snack Pagi")
+                    BoxJamMakan(jam = "Snack Pagi", ic = painterResource(id = R.drawable.ic_snack))
                     MenuMakanItem(
                         menu = menu.value?.SnackPagi?.snack!!,
                         isDone = menu.value?.SnackPagi?.snackIsDone!!,
@@ -274,7 +275,7 @@ fun HomePageScreen(
                         })
 
                     //makan ketiga
-                    BoxJamMakan(jam = "Makan Siang")
+                    BoxJamMakan(jam = "Makan Siang", painterResource(id = R.drawable.ic_afternoon))
                     if (menu.value?.MakanSiang?.makanan1 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanSiang!!.makanan1,
@@ -314,7 +315,7 @@ fun HomePageScreen(
 
 
                     //makan keempat
-                    BoxJamMakan(jam = "Snack Sore")
+                    BoxJamMakan(jam = "Snack Sore", ic = painterResource(id = R.drawable.ic_snack))
                     MenuMakanItem(
                         menu = menu.value?.SnackSore?.snack!!,
                         isDone = menu.value?.SnackSore?.snackIsDone!!,
@@ -327,7 +328,7 @@ fun HomePageScreen(
                         })
 
                     //makan kelimaa
-                    BoxJamMakan(jam = "Makan Malam")
+                    BoxJamMakan(jam = "Makan Malam", ic = painterResource(id = R.drawable.ic_night))
                     if (menu.value?.MakanMalam?.makanan1 != "Kosong") {
                         MenuMakanItem(
                             menu = menu.value?.MakanMalam!!.makanan1,

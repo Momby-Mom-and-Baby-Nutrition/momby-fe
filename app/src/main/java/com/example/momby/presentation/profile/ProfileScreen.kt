@@ -235,6 +235,9 @@ fun ProfileScreen(
                         .clip(RoundedCornerShape(16.dp))
                         .padding(12.dp)
                         .clickable {
+                            val whatsappUrl = "https://wa.me/6281237867350"
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(whatsappUrl))
+                            context.startActivity(intent)
                         },
                     verticalAlignment = Alignment.CenterVertically
                 ) {

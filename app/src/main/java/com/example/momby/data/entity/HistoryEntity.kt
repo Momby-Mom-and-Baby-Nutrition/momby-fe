@@ -30,5 +30,4 @@ data class HistoryEntity(
 
     @TypeConverters(NutrisiMenuConverter::class)
     val nutrisiMenu: NutrisiMenu
-
 )
